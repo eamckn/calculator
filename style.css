@@ -1,0 +1,33 @@
+#calculator-body {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+}
+
+#display {
+    background-color: white;
+    border: 1px solid black;
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    font-size: 40px;
+}
+
+#button-container {
+    display: flex;
+    flex: 2;
+    flex-wrap: wrap;
+}
+
+#button-container button {
+    width: 90px;
+    font-size: 20px;
+}
+
+#display,
+#button-container {
+    margin: 20px;
+}
