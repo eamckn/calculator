@@ -34,17 +34,47 @@ const buttonList = document.querySelector("#button-container");
 buttonList.addEventListener('click', (event) => {
     //alert(event.target.textContent);
     let input = event.target.textContent;
-    if (!isNaN(Number(input)) && !display["operator"]) {
+    // When nothing has been clicked and the clicked button is a number
+    if (input === "=") {
+        displayValue.textContent = operate(Number(display["first"]),
+                                           Number(display["second"]),
+                                           display["operator"]);
+    }
+    else if (!isNaN(Number(input)) && !display["operator"]) {
+        // If not first digit, add digits to first number
         if (display["first"]) {
             display["first"] += input;
         }
+        // If first digit
         else {
             display["first"] = input;
         }
-        displayValue.textContent = display["first"];
+        // Update display
+        displayValue.textContent += input;
+    }
+    // When number is clicked after operator has been selected
+    else if (!isNaN(Number(input)) && display["operator"]) {
+        // If not first digit, add digits to second number
+        if (display["second"]) {
+            display["second"] += input;
+        }
+        // If first digit
+        else {
+            display["second"] = input;
+        }
+        // Update display
+        displayValue.textContent += input;
+    }
+    // When operator is clicked after digits on left side of operation have been selected
+    else if (display["first"] && OPERATOR_SYMBOLS.includes(input) && !display["operator"]) {
+        // Store operator
+        display["operator"] = input;
+        // Update display
+        displayValue.textContent += (" " + display["operator"] + " ");
     }
 })
 
+const OPERATOR_SYMBOLS = "+-x/"
 
 let num1;
 let num2;
@@ -71,16 +101,16 @@ function divide(num1, num2) {
 function operate(num1, num2, operator) {
     switch (operator) {
         case "+":
-            add(num1, num2);
+            return add(num1, num2);
             break;
         case "-":
-            subtract(num1, num2);
+            return subtract(num1, num2);
             break;
         case "x":
-            multiply(num1, num2);
+            return multiply(num1, num2);
             break;
         case "/":
-            divide(num1, num2);
+            return divide(num1, num2);
     }
 }
 
