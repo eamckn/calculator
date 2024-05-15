@@ -2,9 +2,12 @@
 // JS for calculator project
 
 
-const displayValue = document.querySelector("#display");
+const OPERATOR_SYMBOLS = "+-x/"
 
+const displayValue = document.querySelector("#display");
 const buttonList = document.querySelector("#button-container");
+
+let display = {};
 
 buttonList.addEventListener('click', (event) => {
     //alert(event.target.textContent);
@@ -58,11 +61,6 @@ buttonList.addEventListener('click', (event) => {
     }
 })
 
-const OPERATOR_SYMBOLS = "+-x/"
-
-
-let display = {};
-
 function add(num1, num2) {
     return num1 + num2;
 }
@@ -83,13 +81,10 @@ function operate(num1, num2, operator) {
     switch (operator) {
         case "+":
             return add(num1, num2);
-            break;
         case "-":
             return subtract(num1, num2);
-            break;
         case "x":
             return multiply(num1, num2);
-            break;
         case "/":
             return divide(num1, num2);
     }
