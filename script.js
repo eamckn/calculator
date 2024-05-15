@@ -12,6 +12,13 @@ let display = {};
 buttonList.addEventListener('click', (event) => {
     let input = event.target.textContent;
     // When nothing has been clicked and the clicked button is a number
+    if (input === "C") {
+        clearEquationFields();
+        if ("result" in display) {
+            delete display["result"];
+        }
+        displayValue.textContent = "";
+    }
     if (input === "=") {
         let result;
         result = roundToTen(operate(Number(display["first"]),
