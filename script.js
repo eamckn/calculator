@@ -13,10 +13,19 @@ buttonList.addEventListener('click', (event) => {
     let input = event.target.textContent;
     // When nothing has been clicked and the clicked button is a number
     if (input === "=") {
-        runOperation();
+        let result;
+        result = roundToTen(operate(Number(display["first"]),
+                                           Number(display["second"]),
+                                           display["operator"]));
+        displayValue.textContent = result;
+        display["result"] = result;
+        clearEquationFields();
     }
     else if (display["result"] && OPERATOR_SYMBOLS.includes(input)) {
-        useResultForNextOperation(input);
+        display["first"] = display["result"];
+        delete display["result"];
+        display["operator"] = input;
+        displayValue.textContent += (" " + display["operator"] + " ");
 
     }
     else if (!isNaN(Number(input)) && !display["operator"]) {
@@ -114,21 +123,4 @@ function isOperator() {
 
 function isSecondNumber() {
     return "second" in display;
-}
-
-function runOperation() {
-    let result;
-        result = roundToTen(operate(Number(display["first"]),
-                                           Number(display["second"]),
-                                           display["operator"]));
-        displayValue.textContent = result;
-        display["result"] = result;
-        clearEquationFields();
-}
-
-function useResultForNextOperation(input) {
-    display["first"] = display["result"];
-    delete display["result"];
-    display["operator"] = input;
-    displayValue.textContent += (" " + display["operator"] + " ");
 }
