@@ -10,25 +10,39 @@ const buttonList = document.querySelector("#button-container");
 let display = {};
 
 buttonList.addEventListener('click', (event) => {
-    //alert(event.target.textContent);
     let input = event.target.textContent;
     // When nothing has been clicked and the clicked button is a number
     if (input === "=") {
-        displayValue.textContent = operate(Number(display["first"]),
+        let result;
+        result = roundToTen(operate(Number(display["first"]),
                                            Number(display["second"]),
-                                           display["operator"]);
+                                           display["operator"]));
+        displayValue.textContent = result;
+        display["result"] = result;
+        clearEquationFields();
+    }
+    else if (display["result"] && OPERATOR_SYMBOLS.includes(input)) {
+        display["first"] = display["result"];
+        delete display["result"];
+        display["operator"] = input;
+        displayValue.textContent += (" " + display["operator"] + " ");
+
     }
     else if (!isNaN(Number(input)) && !display["operator"]) {
+        if (display["result"]) {
+            delete display["result"];
+        }
         // If not first digit, add digits to first number
         if (display["first"]) {
             display["first"] += input;
+            // Update display
+            displayValue.textContent += input;
         }
         // If first digit
         else {
             display["first"] = input;
+            displayValue.textContent = input;
         }
-        // Update display
-        displayValue.textContent += input;
     }
     // When number is clicked after operator has been selected
     else if (!isNaN(Number(input)) && display["operator"]) {
@@ -51,13 +65,12 @@ buttonList.addEventListener('click', (event) => {
         displayValue.textContent += (" " + display["operator"] + " ");
     }
     else if (display["first"] && display["second"] && display["operator"]) {
-        display["first"] = operate(Number(display["first"]),
+        display["first"] = roundToTen(operate(Number(display["first"]),
                                    Number(display["second"]),
-                                   display["operator"])
+                                   display["operator"]));
         display["operator"] = input;
         delete display["second"];
         displayValue.textContent = display["first"] + " " + display["operator"] + " ";
-
     }
 })
 
@@ -88,4 +101,14 @@ function operate(num1, num2, operator) {
         case "/":
             return divide(num1, num2);
     }
+}
+
+function roundToTen(num) {
+    return Math.round(num * 10000000000) / 10000000000;
+}
+
+function clearEquationFields() {
+    delete display["first"];
+    delete display["second"];
+    delete display["operator"];
 }
