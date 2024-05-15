@@ -24,9 +24,16 @@ buttonList.addEventListener('click', (event) => {
         result = roundToTen(operate(Number(display["first"]),
                                            Number(display["second"]),
                                            display["operator"]));
-        displayValue.textContent = result;
-        display["result"] = result;
-        clearEquationFields();
+        if (isNaN(result)) {
+            alert("ERROR: Cannot divide by 0.");
+            clearEquationFields();
+            displayValue.textContent = "";
+        }
+        else {
+            displayValue.textContent = result;
+            display["result"] = result;
+            clearEquationFields();
+        }
     }
     else if (display["result"] && OPERATOR_SYMBOLS.includes(input)) {
         display["first"] = display["result"];
@@ -94,6 +101,9 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
+    if (num2 === 0) {
+        return NaN;
+    }
     return num1 / num2;
 }
 
