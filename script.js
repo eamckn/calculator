@@ -72,6 +72,15 @@ buttonList.addEventListener('click', (event) => {
         // Update display
         displayValue.textContent += (" " + display["operator"] + " ");
     }
+    else if (display["first"] && display["second"] && display["operator"]) {
+        display["first"] = operate(Number(display["first"]),
+                                   Number(display["second"]),
+                                   display["operator"])
+        display["operator"] = input;
+        delete display["second"];
+        displayValue.textContent = display["first"] + " " + display["operator"] + " ";
+
+    }
 })
 
 const OPERATOR_SYMBOLS = "+-x/"
