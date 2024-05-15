@@ -1,33 +1,68 @@
+body {
+    background-color: peachpuff;
+}
+
+@font-face {
+    font-family: "Calculator";
+    src: url("./calculator.ttf");
+}
+
 #calculator-body {
-    width: 400px;
-    height: 400px;
+    width: 320px;
+    height: 600px;
+    border-radius: 12px;
     margin: auto;
-    background-color: grey;
+    background-color: rgb(217, 211, 208);
     display: flex;
     flex-direction: column;
 }
 
 #display {
-    background-color: white;
-    border: 1px solid black;
+    background-color: rgb(179, 186, 160);
+    border: 8px solid black;
+    padding: 4px 16px;
+    border-radius: 8px;
     display: flex;
     flex: 1;
     align-items: flex-end;
-    font-size: 40px;
+    justify-content: flex-end;
+    font-size: 50px;
+    font-family: "Calculator";
 }
 
 #button-container {
     display: flex;
-    flex: 2;
+    flex: 3;
     flex-wrap: wrap;
+    justify-content: center;
+    align-content: space-around;
+    gap: 4px;
+    padding: 12px;
+    background-color: rgb(166, 160, 157);
+    border-radius: 8px;
 }
 
 #button-container button {
-    width: 90px;
-    font-size: 20px;
+    min-width: 50px;
+    height: 70px;
+    flex: 1;
+    font-size: 30px;
+    font-family: "Calculator";
+    box-sizing: border-box;
+    border: 8px solid rgb(201, 193, 189);
 }
 
 #display,
 #button-container {
     margin: 20px;
+}
+
+#button-container #clear {
+    background-color: red;
+    color: white;
+}
+
+#button-container #equals {
+    background-color: blue;
+    color: white;
 }
