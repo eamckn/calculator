@@ -85,9 +85,6 @@ buttonList.addEventListener('click', (event) => {
 
 const OPERATOR_SYMBOLS = "+-x/"
 
-let num1;
-let num2;
-let operator;
 
 let display = {};
 
