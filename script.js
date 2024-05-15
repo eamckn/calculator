@@ -79,12 +79,21 @@ buttonList.addEventListener('click', (event) => {
         displayValue.textContent += (" " + display["operator"] + " ");
     }
     else if (isFirstNumber() && isSecondNumber() && isOperator()) {
-        display["first"] = roundToTen(operate(Number(display["first"]),
-                                   Number(display["second"]),
-                                   display["operator"]));
-        display["operator"] = input;
-        delete display["second"];
-        displayValue.textContent = display["first"] + " " + display["operator"] + " ";
+        let result;
+        result = roundToTen(operate(Number(display["first"]),
+                                           Number(display["second"]),
+                                           display["operator"]));
+        if (isNaN(result)) {
+            alert("ERROR: Cannot divide by 0.");
+            clearEquationFields();
+            displayValue.textContent = "";
+        }
+        else {
+            display["first"] = result;
+            display["operator"] = input;
+            delete display["second"];
+            displayValue.textContent = display["first"] + " " + display["operator"] + " ";
+        }
     }
 })
 
