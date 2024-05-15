@@ -33,7 +33,7 @@ buttonList.addEventListener('click', (event) => {
             delete display["result"];
         }
         // If not first digit, add digits to first number
-        if (display["first"]) {
+        if (isFirstNumber()) {
             display["first"] += input;
             // Update display
             displayValue.textContent += input;
@@ -45,9 +45,9 @@ buttonList.addEventListener('click', (event) => {
         }
     }
     // When number is clicked after operator has been selected
-    else if (!isNaN(Number(input)) && display["operator"]) {
+    else if (!isNaN(Number(input)) && isOperator()) {
         // If not first digit, add digits to second number
-        if (display["second"]) {
+        if (isSecondNumber()) {
             display["second"] += input;
         }
         // If first digit
@@ -58,13 +58,13 @@ buttonList.addEventListener('click', (event) => {
         displayValue.textContent += input;
     }
     // When operator is clicked after digits on left side of operation have been selected
-    else if (display["first"] && OPERATOR_SYMBOLS.includes(input) && !display["operator"]) {
+    else if (isFirstNumber() && OPERATOR_SYMBOLS.includes(input) && !(isSecondNumber())) {
         // Store operator
         display["operator"] = input;
         // Update display
         displayValue.textContent += (" " + display["operator"] + " ");
     }
-    else if (display["first"] && display["second"] && display["operator"]) {
+    else if (isFirstNumber() && isSecondNumber() && isOperator()) {
         display["first"] = roundToTen(operate(Number(display["first"]),
                                    Number(display["second"]),
                                    display["operator"]));
@@ -111,4 +111,16 @@ function clearEquationFields() {
     delete display["first"];
     delete display["second"];
     delete display["operator"];
+}
+
+function isFirstNumber() {
+    return "first" in display;
+}
+
+function isOperator() {
+    return "operator" in display;
+}
+
+function isSecondNumber() {
+    return "second" in display;
 }
