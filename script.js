@@ -19,7 +19,7 @@ buttonList.addEventListener('click', (event) => {
         }
         displayValue.textContent = "";
     }
-    if (input === "=") {
+    if (input === "=" && isFirstNumber() && isOperator() && isSecondNumber()) {
         let result;
         result = roundToTen(operate(Number(display["first"]),
                                            Number(display["second"]),
