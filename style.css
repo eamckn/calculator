@@ -1,5 +1,10 @@
 body {
     background-color: peachpuff;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @font-face {
@@ -11,7 +16,6 @@ body {
     width: 320px;
     height: 600px;
     border-radius: 12px;
-    margin: auto;
     background-color: rgb(217, 211, 208);
     display: flex;
     flex-direction: column;
@@ -34,22 +38,25 @@ body {
     display: flex;
     flex: 3;
     flex-wrap: wrap;
-    justify-content: center;
-    align-content: space-around;
-    gap: 4px;
-    padding: 12px;
+    justify-content: space-around;
+    align-content: space-between;
     background-color: rgb(166, 160, 157);
     border-radius: 8px;
+    padding: 8px;
+    gap: 8px;
 }
 
 #button-container button {
-    min-width: 50px;
-    height: 70px;
-    flex: 1;
+    width: 60px;
+    height: 60px;
+    flex: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 30px;
     font-family: "Calculator";
     box-sizing: border-box;
-    border: 8px solid rgb(201, 193, 189);
+    border: 6px solid rgb(201, 193, 189);
 }
 
 #display,
@@ -65,4 +72,13 @@ body {
 #button-container #equals {
     background-color: blue;
     color: white;
+}
+
+#button-container #backspace {
+    flex-grow: 0;
+}
+
+#button-container #multiply {
+    align-items: flex-start;
+    font-size: 28px;
 }
