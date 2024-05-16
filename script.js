@@ -21,7 +21,7 @@ buttonList.addEventListener('click', (event) => {
     }
     if (input === "=" && isFirstNumber() && isOperator() && isSecondNumber()) {
         let result;
-        result = roundToTen(operate(Number(display["first"]),
+        result = roundToEight(operate(Number(display["first"]),
                                            Number(display["second"]),
                                            display["operator"]));
         if (isNaN(result)) {
@@ -80,7 +80,7 @@ buttonList.addEventListener('click', (event) => {
     }
     else if (isFirstNumber() && isSecondNumber() && isOperator()) {
         let result;
-        result = roundToTen(operate(Number(display["first"]),
+        result = roundToEight(operate(Number(display["first"]),
                                            Number(display["second"]),
                                            display["operator"]));
         if (isNaN(result)) {
@@ -129,8 +129,8 @@ function operate(num1, num2, operator) {
     }
 }
 
-function roundToTen(num) {
-    return Math.round(num * 10000000000) / 10000000000;
+function roundToEight(num) {
+    return Math.round(num * 100000000) / 100000000;
 }
 
 function clearEquationFields() {
