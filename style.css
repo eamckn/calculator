@@ -19,6 +19,39 @@ body {
     background-color: rgb(217, 211, 208);
     display: flex;
     flex-direction: column;
+    box-shadow: black 8px 5px 5px;
+    border: 1px solid black;
+}
+
+#calculator-top {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+}
+
+#design-container {
+    width: 50px;
+    height: 60px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+    margin-left: 60px;
+}
+
+#design-container div {
+    width: 10px;
+}
+
+#design-container #left-stripe {
+    background-color: rgb(245, 177, 59);
+}
+
+#design-container #middle-stripe {
+    background-color: rgb(245, 138, 32);
+}
+
+#design-container #right-stripe {
+    background-color: rgb(65, 163, 140);
 }
 
 #display {
@@ -57,11 +90,12 @@ body {
     font-family: "Calculator";
     box-sizing: border-box;
     border: 6px solid rgb(201, 193, 189);
+    box-shadow: black 4px 2px 2px;
 }
 
 #display,
 #button-container {
-    margin: 20px;
+    margin: 0px 20px 20px;
 }
 
 #button-container #clear {
