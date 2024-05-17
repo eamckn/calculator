@@ -99,12 +99,12 @@ body {
 }
 
 #button-container #clear {
-    background-color: red;
+    background-color: rgb(245, 138, 32);
     color: white;
 }
 
 #button-container #equals {
-    background-color: blue;
+    background-color: rgb(65, 163, 140);
     color: white;
 }
 
