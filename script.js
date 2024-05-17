@@ -12,7 +12,25 @@ let display = {};
 buttonList.addEventListener('click', (event) => {
     let input = event.target.textContent;
     // Clear display and object keys
-    if (input === "C") {
+    if (input === "B" && !resultExists()) {
+        if (secondNumberExists()) {
+            display["second"] = display["second"].slice(0, -1);
+            if (display["second"] === "") {
+                delete display["second"];
+            }
+        }
+        else if (operatorExists()) {
+            delete display["operator"];
+        }
+        else if (firstNumberExists()) {
+            display["first"] = display["first"].slice(0, -1);
+            if (display["first"] === "") {
+                delete display["first"];
+            }
+        }
+        backspaceDisplay();
+    }
+    else if (input === "C") {
         clearEquationFields();
         if (resultExists()) {
             clearResult();
@@ -20,7 +38,7 @@ buttonList.addEventListener('click', (event) => {
         clearDisplay();
     }
     // Filled equation and equals is clicked
-    if (input === "=" && equationIsFilled()) {
+    else if (input === "=" && equationIsFilled()) {
         let result;
         result = roundToEight(operate(Number(display["first"]),
                                            Number(display["second"]),
@@ -32,7 +50,7 @@ buttonList.addEventListener('click', (event) => {
         }
         else {
             displayValue.textContent = result;
-            display["result"] = result;
+            display["result"] = result.toString();
             clearEquationFields();
         }
     }
@@ -69,7 +87,9 @@ buttonList.addEventListener('click', (event) => {
         displayValue.textContent += input;
     }
     // Selecting the operator
-    else if (firstNumberExists() && OPERATOR_SYMBOLS.includes(input) && !(secondNumberExists())) {
+    else if (firstNumberExists() && OPERATOR_SYMBOLS.includes(input) 
+                                 && !operatorExists()
+                                 && !(secondNumberExists())) {
         display["operator"] = input;
         displayValue.textContent += display["operator"];
     }
@@ -85,7 +105,7 @@ buttonList.addEventListener('click', (event) => {
             clearDisplay();
         }
         else {
-            display["first"] = result;
+            display["first"] = result.toString();
             display["operator"] = input;
             delete display["second"];
             displayValue.textContent = display["first"] + display["operator"];
@@ -161,4 +181,8 @@ function resultExists() {
 
 function equationIsFilled() {
     return firstNumberExists() && operatorExists() && secondNumberExists();
+}
+
+function backspaceDisplay() {
+    displayValue.textContent = displayValue.textContent.slice(0, -1);
 }
