@@ -11,15 +11,16 @@ let display = {};
 
 buttonList.addEventListener('click', (event) => {
     let input = event.target.textContent;
-    // When nothing has been clicked and the clicked button is a number
+    // Clear display and object keys
     if (input === "C") {
         clearEquationFields();
-        if ("result" in display) {
-            delete display["result"];
+        if (resultExists()) {
+            clearResult();
         }
-        displayValue.textContent = "";
+        clearDisplay();
     }
-    if (input === "=" && isFirstNumber() && isOperator() && isSecondNumber()) {
+    // Filled equation and equals is clicked
+    if (input === "=" && equationIsFilled()) {
         let result;
         result = roundToEight(operate(Number(display["first"]),
                                            Number(display["second"]),
@@ -27,7 +28,7 @@ buttonList.addEventListener('click', (event) => {
         if (isNaN(result)) {
             alert("ERROR: Cannot divide by 0.");
             clearEquationFields();
-            displayValue.textContent = "";
+            clearDisplay();
         }
         else {
             displayValue.textContent = result;
@@ -35,50 +36,45 @@ buttonList.addEventListener('click', (event) => {
             clearEquationFields();
         }
     }
-    else if (display["result"] && OPERATOR_SYMBOLS.includes(input)) {
+    // Clicking an operator after clicking equals
+    else if (resultExists() && OPERATOR_SYMBOLS.includes(input)) {
         display["first"] = display["result"];
-        delete display["result"];
+        clearResult();
         display["operator"] = input;
-        displayValue.textContent += (" " + display["operator"] + " ");
+        displayValue.textContent += display["operator"];
 
     }
-    else if (!isNaN(Number(input)) && !display["operator"]) {
-        if (display["result"]) {
-            delete display["result"];
+    // Populate numbers for left side of operator
+    else if (!isNaN(Number(input)) && !operatorExists()) {
+        if (resultExists()) {
+            clearResult();
         }
-        // If not first digit, add digits to first number
-        if (isFirstNumber()) {
+        if (firstNumberExists()) {
             display["first"] += input;
-            // Update display
             displayValue.textContent += input;
         }
-        // If first digit
         else {
             display["first"] = input;
             displayValue.textContent = input;
         }
     }
-    // When number is clicked after operator has been selected
-    else if (!isNaN(Number(input)) && isOperator()) {
-        // If not first digit, add digits to second number
-        if (isSecondNumber()) {
+    // Populating numbers for right side of operator
+    else if (!isNaN(Number(input)) && operatorExists()) {
+        if (secondNumberExists()) {
             display["second"] += input;
         }
-        // If first digit
         else {
             display["second"] = input;
         }
-        // Update display
         displayValue.textContent += input;
     }
-    // When operator is clicked after digits on left side of operation have been selected
-    else if (isFirstNumber() && OPERATOR_SYMBOLS.includes(input) && !(isSecondNumber())) {
-        // Store operator
+    // Selecting the operator
+    else if (firstNumberExists() && OPERATOR_SYMBOLS.includes(input) && !(secondNumberExists())) {
         display["operator"] = input;
-        // Update display
-        displayValue.textContent += (" " + display["operator"] + " ");
+        displayValue.textContent += display["operator"];
     }
-    else if (isFirstNumber() && isSecondNumber() && isOperator()) {
+    // Evaluating current equation when an operator is clicked after the second number
+    else if (equationIsFilled()) {
         let result;
         result = roundToEight(operate(Number(display["first"]),
                                            Number(display["second"]),
@@ -86,13 +82,13 @@ buttonList.addEventListener('click', (event) => {
         if (isNaN(result)) {
             alert("ERROR: Cannot divide by 0.");
             clearEquationFields();
-            displayValue.textContent = "";
+            clearDisplay();
         }
         else {
             display["first"] = result;
             display["operator"] = input;
             delete display["second"];
-            displayValue.textContent = display["first"] + " " + display["operator"] + " ";
+            displayValue.textContent = display["first"] + display["operator"];
         }
     }
 })
@@ -139,14 +135,30 @@ function clearEquationFields() {
     delete display["operator"];
 }
 
-function isFirstNumber() {
+function clearResult() {
+    delete display["result"];
+}
+
+function clearDisplay() {
+    displayValue.textContent = "";
+}
+
+function firstNumberExists() {
     return "first" in display;
 }
 
-function isOperator() {
+function operatorExists() {
     return "operator" in display;
 }
 
-function isSecondNumber() {
+function secondNumberExists() {
     return "second" in display;
+}
+
+function resultExists() {
+    return "result" in display;
+}
+
+function equationIsFilled() {
+    return firstNumberExists() && operatorExists() && secondNumberExists();
 }
