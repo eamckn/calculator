@@ -74,7 +74,7 @@ buttonList.addEventListener('click', (event) => {
         displayValue.textContent += display["operator"];
     }
     // Evaluating current equation when an operator is clicked after the second number
-    else if (equationIsFilled()) {
+    else if (equationIsFilled() && OPERATOR_SYMBOLS.includes(input)) {
         let result;
         result = roundToEight(operate(Number(display["first"]),
                                            Number(display["second"]),
