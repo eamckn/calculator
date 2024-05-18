@@ -11,8 +11,30 @@ let display = {};
 
 buttonList.addEventListener('click', (event) => {
     let input = event.target.textContent;
-    // Clear display and object keys
-    if (input === "B" && !resultExists()) {
+    // Clicking decimal
+    if (input === ".") {
+        if (!firstNumberExists()) {
+            if (resultExists()) {
+                clearDisplay();
+            }
+            display["first"] = input;
+            displayValue.textContent += input;
+        }
+        else if (!display["first"].includes(input) && !operatorExists()) {
+            display["first"] += input;
+            displayValue.textContent += input;
+        }
+        else if (!secondNumberExists() && operatorExists()) {
+            display["second"] = input;
+            displayValue.textContent += input;
+        }
+        else if (operatorExists() && !display["second"].includes(input)) {
+            display["second"] += input;
+            displayValue.textContent += input;
+        }
+    }
+    // Clicking backspace
+    else if (input === "B" && !resultExists()) {
         if (secondNumberExists()) {
             display["second"] = display["second"].slice(0, -1);
             if (display["second"] === "") {
@@ -30,6 +52,7 @@ buttonList.addEventListener('click', (event) => {
         }
         backspaceDisplay();
     }
+    // Clearing display and object key-value pairs
     else if (input === "C") {
         clearEquationFields();
         if (resultExists()) {
