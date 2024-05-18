@@ -100,11 +100,13 @@ body {
 
 #button-container #clear {
     background-color: rgb(245, 138, 32);
+    border: 6px solid rgb(196, 112, 29);
     color: white;
 }
 
 #button-container #equals {
     background-color: rgb(65, 163, 140);
+    border: 6px solid rgb(50, 125, 107);
     color: white;
 }
 
@@ -115,4 +117,19 @@ body {
 #button-container #multiply {
     align-items: flex-start;
     font-size: 28px;
+}
+
+#button-container #add,
+#button-container #subtract,
+#button-container #multiply,
+#button-container #divide {
+    background-color: rgb(76, 84, 68);
+    border: 6px solid rgb(56, 61, 50);
+    color: white;
+}
+
+#button-container #backspace {
+    background-color: rgb(161, 61, 68);
+    border: 6px solid rgb(120, 46, 51);
+    color: white;
 }
